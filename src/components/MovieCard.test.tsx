@@ -45,7 +45,10 @@ describe('MovieCard', () => {
 
     expect(screen.getByText(mockMovie.title)).toBeInTheDocument();
     expect(screen.getByText(mockMovie.release_date)).toBeInTheDocument();
-    expect(screen.getByAltText(mockMovie.title)).toHaveAttribute('src', mockMovie.image);
+    expect(screen.getByAltText(`${mockMovie.title} poster`)).toHaveAttribute(
+      'src',
+      mockMovie.image,
+    );
   });
 
   it('navigates to movie details page on click', () => {
