@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, ReactNode } from 'react';
-import { encrypt, FavoritesContext, getInitialState } from './FavoritesContextUtils'; // Import from the new file
+import { encrypt, FavoritesContext, getInitialState } from './FavoritesContextUtils'; 
 import { Movie } from '../types/Movie';
 
 type State = {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
 import Dropdown from '../components/Dropdown';
@@ -15,7 +15,6 @@ const releaseDateOptions = ['2020s', '2010s', '2000s', '1990s'];
 const ratingOptions = ['80+', '70-79', '60-69', '50-59', '40-49', '30-39', '20-29'];
 
 const Home = () => {
-  console.log('Home rendered'); // Debugging line
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
@@ -66,16 +65,32 @@ const Home = () => {
     debouncedSearch(query, page, { releaseDate, rating });
   }, [query, page, releaseDate, rating, debouncedSearch]);
 
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
   const handleSnackbarClose = () => {
     setSnackbar({ open: false, message: '' });
   };
 
-  const handleFavoriteAction = (action: 'added' | 'removed') => {
+  const handleFavoriteAction = useCallback((action: 'added' | 'removed') => {
     setSnackbar({
       open: true,
       message: `Movie ${action} ${action === 'added' ? 'to' : 'from'} favorites!`,
     });
-  };
+  }, []);
+
+  const memoizedMovies = useMemo(
+    () =>
+      movies.map((movie) => (
+        <Grid key={movie.id}>
+          <MovieCard movie={movie} onFavoriteAction={handleFavoriteAction} />
+        </Grid>
+      )),
+    [movies, handleFavoriteAction],
+  );
 
   if (!loading && error && movies.length === 0) {
     return (
@@ -132,11 +147,7 @@ const Home = () => {
       )}
 
       <Grid container spacing={2} mt={2} justifyContent="center">
-        {movies.map((movie) => (
-          <Grid key={movie.id}>
-            <MovieCard movie={movie} onFavoriteAction={handleFavoriteAction} />
-          </Grid>
-        ))}
+        {memoizedMovies}
       </Grid>
 
       {totalResults > pageSize && (

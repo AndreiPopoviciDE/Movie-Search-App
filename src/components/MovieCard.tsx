@@ -29,12 +29,19 @@ interface MovieCardProps {
   onFavoriteAction?: (action: 'added' | 'removed') => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteAction }) => {
+const areEqual = (prevProps: MovieCardProps, nextProps: MovieCardProps) => {
+  return (
+    prevProps.movie.id === nextProps.movie.id &&
+    prevProps.movie.title === nextProps.movie.title &&
+    prevProps.movie.release_date === nextProps.movie.release_date &&
+    prevProps.onFavoriteAction === nextProps.onFavoriteAction
+  );
+};
+
+const MovieCard: React.FC<MovieCardProps> = React.memo(({ movie, onFavoriteAction }) => {
   const { user } = useAuth(); // Get the current user
   const navigate = useNavigate();
   const { state, dispatch } = useFavorites();
-
-  // Memoize the check for whether the movie is in favorites to prevent recalculations
   const isFavorite = useMemo(
     () => state.favorites.some((fav) => fav.id === movie.id),
     [state.favorites, movie.id],
@@ -86,6 +93,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteAction }) => {
       )}
     </Card>
   );
-};
+}, areEqual);
 
 export default MovieCard;
