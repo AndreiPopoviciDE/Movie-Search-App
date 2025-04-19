@@ -1,125 +1,140 @@
-# 🎥 Movie Explorer
+🎥 Movie Explorer
 
-Movie Explorer is a web application built with modern web technologies to allow users to search, explore, and manage their favorite movies. It features a responsive design, user authentication, and state management for a seamless user experience.
+Movie Explorer is a web application that allows users to search, explore, and manage their favorite movies—especially those from Studio Ghibli. It features a modern UI, responsive design, user authentication, and state management for a smooth and personalized experience.
 
-## Technologies Used
+🚀 Features
+🔧 Core Features
+🔍 Search Movies – Find movies using a responsive, dynamic search bar.
 
-### Frontend
+⭐ Favorites Management – Add/remove favorite movies with persistent storage in localStorage.
 
-- **React**: A JavaScript library for building user interfaces.
-- **TypeScript**: A strongly typed programming language that builds on JavaScript.
-- **Vite**: A fast build tool and development server for modern web projects.
-- **Material-UI (MUI)**: A React component library for building responsive and accessible user interfaces.
-- **React Router**: For client-side routing and navigation.
-- **Axios**: For making HTTP requests to external APIs.
+📄 Movie Details – View detailed info including title, description, and ratings.
 
-### State Management
+💡 UX Enhancements
+🌙 Theme Switching – Toggle between light and dark themes.
 
-- **React Context API**: Used for managing global state, including:
-  - **FavoritesContext**: To manage the user's favorite movies.
-  - **ThemeContext**: To toggle between light and dark themes.
-  - **AuthContext**: To manage user authentication state.
+🔔 Snackbar Notifications – Instant feedback for user actions.
 
-### Authentication
+📱 Responsive Design – Optimized for both desktop and mobile screens.
 
-- **Firebase Authentication**: Used for Google-based user authentication.
+📚 Pagination – Easily navigate through large datasets of movies.
 
-### API Integration
+🔐 Authentication
+🔑 Firebase Login – Secure Google-based login and logout functionality.
 
-- **Studio Ghibli API**: Used to fetch movie data.
-- **Custom API Utilities**: Functions for searching and filtering movies, and fetching movie details.
+🛠️ Technologies Used
+🖥️ Frontend
+React – For building dynamic user interfaces.
 
-### Testing
+TypeScript – Ensures type safety and better tooling.
 
-- **Vitest**: A fast unit testing framework.
-- **React Testing Library**: For testing React components.
-- **JSDOM**: For simulating a browser environment during tests.
+Vite – For fast builds and lightning-fast dev server.
 
-### Build and Deployment
+Material-UI (MUI) – Component library for responsive, accessible UI.
 
-- **Vite**: For building the production-ready application.
-- **Husky**: For managing Git hooks (e.g., pre-commit hooks for linting and formatting).
-- **Prettier**: For code formatting.
-- **ESLint**: For enforcing coding standards and best practices.
+React Router – For seamless client-side routing.
 
-### Performance Optimization
+Axios – For making API requests.
 
-- **vite-plugin-compression**: For generating Gzip and Brotli-compressed assets.
-- **Lazy Loading**: React's `React.lazy` and `Suspense` are used to load components on demand.
+🗂️ State Management
+React Context API:
 
-### Security
+FavoritesContext – Manages user's favorite movies.
 
-- **Sanitization**: Custom utilities to sanitize user inputs and API responses to prevent XSS attacks.
-- **Environment Variables**: Sensitive data like Firebase API keys are stored in `.env` files.
-- **Data Storage**: Favorite movies are securely stored in an encoded format within `localStorage` to ensure persistence across sessions, while theme settings are stored in plain text.
+ThemeContext – Handles theme switching.
 
-### Responsive Design
+AuthContext – Manages authentication state.
 
-- **Material-UI Breakpoints**: Used to ensure the application is mobile-friendly and responsive.
+🔐 Authentication
+Firebase Authentication – Enables secure Google Sign-In.
 
-### Accessibility
+🌐 API Integration
+Studio Ghibli API – Primary source for movie data.
 
-- **ARIA Attributes**: Added to improve accessibility for screen readers.
-- **eslint-plugin-jsx-a11y**: Enforces accessibility best practices in JSX.
+Custom API Utilities – Functions for searching, filtering, and fetching movie details.
 
-### Additional Features
+✅ Testing
+Vitest – Fast unit testing.
 
-- **Favorites Management**: Users can add or remove movies from their favorites list, which is persisted in `localStorage`.
-- **Theme Switching**: Users can toggle between light and dark themes.
-- **Snackbar Notifications**: Feedback is provided to users for actions like adding/removing favorites.
-- **Pagination**: For navigating through large datasets of movies.
+React Testing Library – For testing UI components.
 
-## Project Structure
+JSDOM – Simulates browser environment for tests.
 
-The project is organized as follows:
+📦 Build and Tooling
+Vite – Handles build and dev server.
 
-- **`src/components`**: Reusable UI components like `Navbar`, `SearchBar`, and `MovieCard`.
-- **`src/context`**: Context providers and utilities for global state management.
-- **`src/pages`**: Page components like `Home`, `Favorites`, and `MovieDetails`.
-- **`src/api`**: API utilities for fetching and filtering movie data.
-- **`src/utils`**: Helper functions like sanitization utilities.
-- **`src/types`**: TypeScript interfaces and types.
-- **`src/routes`**: Application routing logic.
+Husky – Manages Git hooks (e.g., pre-commit linting).
+
+Prettier – Code formatting.
+
+ESLint – Enforces coding best practices.
+
+⚡ Performance Optimization
+vite-plugin-compression – Gzip/Brotli asset compression.
+
+Lazy Loading – React.lazy + Suspense for on-demand component loading.
+
+🔐 Security
+Sanitization – Custom utilities sanitize API data to prevent XSS.
+
+Environment Variables – Sensitive config stored securely in .env.
+
+Data Storage – Favorites stored encoded in localStorage; themes in plain text.
+
+🌈 Accessibility
+ARIA Attributes – For better screen reader support.
+
+eslint-plugin-jsx-a11y – Enforces accessibility best practices.
+
+📁 Project Structure
+src/
+├── api/ # API utilities
+├── components/ # Reusable UI components (Navbar, MovieCard, etc.)
+├── context/ # Global state providers (Theme, Auth, Favorites)
+├── pages/ # Page components (Home, Favorites, MovieDetails)
+├── routes/ # Application routing
+├── types/ # TypeScript interfaces and types
+├── utils/ # Helper functions (e.g., sanitization)
+
+📦 Requirements
+Node.js v16 or higher
+
+npm or yarn
 
 ## How to Run the Project
 
 1. Clone the repository:
 
-   ```bash
-   git clone <repository-url>
-   cd movie-app
-   ```
+bash
+git clone <repository-url>
+cd movie-app
 
 2. Install dependencies:
 
-   ```bash
-   npm install
-   ```
+bash
+npm install
 
-3. Create a `.env` file in the root directory and add your Firebase configuration:
+3. Create a .env file in the root directory and add your Firebase configuration:
 
-   ```env
-   VITE_FIREBASE_API_KEY=your-api-key
-   VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
-   VITE_FIREBASE_PROJECT_ID=your-project-id
-   VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-   VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-   VITE_FIREBASE_APP_ID=your-app-id
-   ```
+env
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
 
 4. Start the development server:
 
-   ```bash
-   npm run dev
-   ```
+bash
+npm run dev
 
 5. Build the project for production:
 
-   ```bash
-   npm run build
-   ```
+bash
+npm run build
 
 6. Run tests:
-   ```bash
-   npm run test
-   ```
+
+bash
+npm run test
