@@ -93,12 +93,15 @@ Movie Explorer is a web application that allows users to search, explore, and ma
 - **eslint-plugin-jsx-a11y** – Enforces accessibility best practices.
 
 ---
+## Live Demo
+
+Check out the deployed version of the app: [Movie Search App](https://movie-search-app-de.netlify.app/)
 
 # Lighthouse Score
 
 Here’s the Lighthouse audit score for the app:
 
-![Lighthouse Score](assets/lighthouse-score.png)
+![Lighthouse Score](src/assets/lighthouse-score.png)
 
 
 ## Requirements
