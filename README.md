@@ -93,6 +93,7 @@ Movie Explorer is a web application that allows users to search, explore, and ma
 - **eslint-plugin-jsx-a11y** – Enforces accessibility best practices.
 
 ---
+
 ## Live Demo
 
 Check out the deployed version of the app: [Movie Search App](https://movie-search-app-de.netlify.app/)
@@ -103,7 +104,6 @@ Here’s the Lighthouse audit score for the app:
 
 ![Lighthouse Score](src/assets/lighthouse-score.png)
 
-
 ## Requirements
 
 - **Node.js** v16 or higher
@@ -113,49 +113,44 @@ Here’s the Lighthouse audit score for the app:
 
 1. **Clone the repository**:
 
-    ```bash
-    git clone <repository-url>
-    cd movie-app
-    ```
+   ```bash
+   git clone <repository-url>
+   cd movie-app
+   ```
 
 2. **Install dependencies**:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. **Create a `.env` file** in the root directory and add your Firebase configuration:
 
-    ```env
-    VITE_FIREBASE_API_KEY=your-api-key
-    VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
-    VITE_FIREBASE_PROJECT_ID=your-project-id
-    VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-    VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-    VITE_FIREBASE_APP_ID=your-app-id
-    ```
+   ```env
+   VITE_FIREBASE_API_KEY=your-api-key
+   VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+   VITE_FIREBASE_PROJECT_ID=your-project-id
+   VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+   VITE_FIREBASE_APP_ID=your-app-id
+   ```
 
 4. **Start the development server**:
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 5. **Build the project for production**:
 
-    ```bash
-    npm run build
-    ```
+   ```bash
+   npm run build
+   ```
 
 6. **Run tests**:
 
-    ```bash
-    npm run test
-    ```
+   ```bash
+   npm run test
+   ```
 
 ---
-
-
-
-
-

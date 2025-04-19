@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from 'react';
-import { ThemeContext } from './ThemeContextUtils'; 
+import { ThemeContext } from './ThemeContextUtils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 

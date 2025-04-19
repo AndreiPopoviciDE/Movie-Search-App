@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContextUtils';
 import { CircularProgress } from '@mui/material';
 
-
 const Home = React.lazy(() => import('../pages/Home'));
 const MovieDetails = React.lazy(() => import('../pages/MovieDetails'));
 const Favorites = React.lazy(() => import('../pages/Favorites'));

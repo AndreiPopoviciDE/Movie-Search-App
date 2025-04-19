@@ -39,7 +39,17 @@ const Favorites = () => {
     </Box>
   );
 
-  const renderMovieCard = ({ id, image, title, release_date }: { id: string; image: string; title: string; release_date: string }) => (
+  const renderMovieCard = ({
+    id,
+    image,
+    title,
+    release_date,
+  }: {
+    id: string;
+    image: string;
+    title: string;
+    release_date: string;
+  }) => (
     <Grid key={id}>
       <Card
         sx={{
@@ -50,7 +60,10 @@ const Favorites = () => {
           '&:hover': { transform: 'scale(1.05)' },
         }}
       >
-        <CardActionArea onClick={() => navigate(`/movie/${id}`)} aria-label={`View details of ${title}`}>
+        <CardActionArea
+          onClick={() => navigate(`/movie/${id}`)}
+          aria-label={`View details of ${title}`}
+        >
           <CardMedia
             component="img"
             image={image}
