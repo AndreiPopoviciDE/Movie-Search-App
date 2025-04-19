@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFavorites } from '../context/FavoritesContextUtils';
-import { fetchMovieDetails } from '../api/mockApi';
+import { fetchMovieDetails } from '../api/movieApi';
 import { Movie } from '../types/Movie';
 import {
   Box,

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
 import Dropdown from '../components/Dropdown';
-import { searchMovies } from '../api/mockApi';
+import { searchMovies } from '../api/movieApi';
 import debounce from 'lodash.debounce';
 import { sanitizeMovie } from '../utils/sanitizing';
 import { Movie } from '../types/Movie';
