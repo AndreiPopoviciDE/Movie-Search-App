@@ -1,20 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
+import Dropdown from '../components/Dropdown';
 import { searchMovies } from '../api/mockApi';
 import debounce from 'lodash.debounce';
 import { sanitizeMovie } from '../utils/sanitizing';
 import { Movie } from '../types/Movie';
-import {
-  Box,
-  CircularProgress,
-  Typography,
-  Alert,
-  Pagination,
-  Snackbar,
-  TextField,
-  MenuItem,
-} from '@mui/material';
+import { Box, CircularProgress, Typography, Alert, Pagination, Snackbar } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 const pageSize = 12;
@@ -23,6 +15,7 @@ const releaseDateOptions = ['2020s', '2010s', '2000s', '1990s'];
 const ratingOptions = ['80+', '70-79', '60-69', '50-59', '40-49', '30-39', '20-29'];
 
 const Home = () => {
+  console.log('Home rendered'); // Debugging line
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
@@ -107,34 +100,13 @@ const Home = () => {
             '@media (min-width: 1024px)': { width: '50%' },
           }}
         >
-          <TextField
-            select
+          <Dropdown
             label="Release Date"
             value={releaseDate}
-            onChange={(e) => setReleaseDate(e.target.value)}
-            sx={{ flex: 1 }}
-          >
-            <MenuItem value="">All</MenuItem>
-            {releaseDateOptions.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            label="Rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            sx={{ flex: 1 }}
-          >
-            <MenuItem value="">All</MenuItem>
-            {ratingOptions.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={releaseDateOptions}
+            onChange={setReleaseDate}
+          />
+          <Dropdown label="Rating" value={rating} options={ratingOptions} onChange={setRating} />
         </Box>
       </Box>
 
