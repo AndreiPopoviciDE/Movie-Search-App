@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-export const usePagination = (initialPage: number = 1) => {
-  const [page, setPage] = useState(initialPage);
+export const usePagination = () => {
+  const [page, setPage] = useState(1);
 
-  const handlePageChange = (_: unknown, value: number) => {
-    setPage(value);
-  };
+  const handlePageChange = useCallback((_: unknown, newPage: number) => {
+    setPage(newPage);
+  }, []);
 
-  return { page, setPage, handlePageChange };
+  return { page, handlePageChange, setPage };
 };

@@ -1,15 +1,16 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
 import Dropdown from '../components/Dropdown';
+import { usePagination } from '../hooks/usePagination';
+import { useSnackbar } from '../hooks/useSnackbar';
 import { searchMovies } from '../api/movieApi';
 import debounce from 'lodash.debounce';
 import { sanitizeMovie } from '../utils/sanitizing';
 import { Movie } from '../types/Movie';
 import { Box, CircularProgress, Typography, Alert, Pagination, Snackbar } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { usePagination } from '../hooks/usePagination';
-import { useSnackbar } from '../hooks/useSnackbar';
+
 
 const pageSize = 12;
 
@@ -25,10 +26,12 @@ const Home = () => {
   const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
   const [releaseDate, setReleaseDate] = useState('');
   const [rating, setRating] = useState('');
-  const { page, setPage, handlePageChange } = usePagination();
+  const { page, handlePageChange } = usePagination();
 
-  const debouncedSearch = useCallback(
-    debounce(
+  const debouncedSearchRef = useRef<ReturnType<typeof debounce> | null>(null);
+
+  useEffect(() => {
+    debouncedSearchRef.current = debounce(
       async (
         text: string,
         currentPage: number,
@@ -49,31 +52,32 @@ const Home = () => {
           setLoading(false);
         }
       },
-      600,
-    ),
-    [setLoading, setError, setMovies, setTotalResults],
-  );
+      600
+    );
 
-  useEffect(() => {
-    setPage(1);
-  }, [query, releaseDate, rating]);
-
-  // Trigger search on query, page, or filters change
-  useEffect(() => {
-    debouncedSearch(query, page, { releaseDate, rating });
-  }, [query, page, releaseDate, rating, debouncedSearch]);
-
-  useEffect(() => {
     return () => {
-      debouncedSearch.cancel();
+      debouncedSearchRef.current?.cancel();
     };
-  }, [debouncedSearch]);
+  }, []); 
+
+  const triggerSearch = useCallback(() => {
+    debouncedSearchRef.current?.(query, page, { releaseDate, rating });
+  }, [query, page, releaseDate, rating]);
+
+ 
+  useEffect(() => {
+    handlePageChange({}, 1);
+  }, [query, releaseDate, rating, handlePageChange]);
+
+  useEffect(() => {
+    triggerSearch();
+  }, [triggerSearch]);
 
   const handleFavoriteAction = useCallback(
     (action: 'added' | 'removed') => {
       showSnackbar(`Movie ${action} ${action === 'added' ? 'to' : 'from'} favorites!`);
     },
-    [showSnackbar],
+    [showSnackbar]
   );
 
   const memoizedMovies = useMemo(
@@ -83,7 +87,7 @@ const Home = () => {
           <MovieCard movie={movie} onFavoriteAction={handleFavoriteAction} />
         </Grid>
       )),
-    [movies, handleFavoriteAction],
+    [movies, handleFavoriteAction]
   );
 
   if (!loading && error && movies.length === 0) {
