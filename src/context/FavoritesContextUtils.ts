@@ -30,10 +30,13 @@ export const decrypt = (data: string) => decodeURIComponent(escape(atob(data)));
 
 export const getInitialState = (): State => {
   try {
+    if (typeof localStorage === 'undefined') {
+      throw new Error('localStorage is not available');
+    }
     const local = localStorage.getItem('favorites');
     return local ? { favorites: JSON.parse(decrypt(local)) } : { favorites: [] };
   } catch (error) {
-    console.error('Failed to get initial state:', error);
-    return { favorites: [] };
+    console.error('Failed to get initial state from localStorage:', error);
+    return { favorites: [] }; // Fallback to an empty state
   }
 };
