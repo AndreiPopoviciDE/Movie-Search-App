@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavorites } from '../context/FavoritesContextUtils';
+import { useSnackbar } from '../hooks/useSnackbar';
 import {
   Box,
   Grid,
@@ -17,18 +17,11 @@ import Alert from '@mui/material/Alert';
 const Favorites = () => {
   const { state, dispatch } = useFavorites();
   const navigate = useNavigate();
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string }>({
-    open: false,
-    message: '',
-  });
-
-  const handleSnackbarClose = () => {
-    setSnackbar({ open: false, message: '' });
-  };
+  const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
   const handleRemove = (id: string) => {
     dispatch({ type: 'REMOVE_FAVORITE', payload: id });
-    setSnackbar({ open: true, message: 'Movie removed from favorites!' });
+    showSnackbar('Movie removed from favorites!');
   };
 
   const renderEmptyState = () => (
@@ -117,10 +110,10 @@ const Favorites = () => {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
-        onClose={handleSnackbarClose}
+        onClose={closeSnackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={closeSnackbar} severity="success" sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>

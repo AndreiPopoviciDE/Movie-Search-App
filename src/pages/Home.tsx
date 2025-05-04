@@ -9,6 +9,7 @@ import { Movie } from '../types/Movie';
 import { Box, CircularProgress, Typography, Alert, Pagination, Snackbar } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { usePagination } from '../hooks/usePagination';
+import { useSnackbar } from '../hooks/useSnackbar';
 
 const pageSize = 12;
 
@@ -21,10 +22,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalResults, setTotalResults] = useState(0);
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string }>({
-    open: false,
-    message: '',
-  });
+  const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
   const [releaseDate, setReleaseDate] = useState('');
   const [rating, setRating] = useState('');
   const { page, setPage, handlePageChange } = usePagination();
@@ -72,16 +70,12 @@ const Home = () => {
     };
   }, [debouncedSearch]);
 
-  const handleSnackbarClose = () => {
-    setSnackbar({ open: false, message: '' });
-  };
-
-  const handleFavoriteAction = useCallback((action: 'added' | 'removed') => {
-    setSnackbar({
-      open: true,
-      message: `Movie ${action} ${action === 'added' ? 'to' : 'from'} favorites!`,
-    });
-  }, []);
+  const handleFavoriteAction = useCallback(
+    (action: 'added' | 'removed') => {
+      showSnackbar(`Movie ${action} ${action === 'added' ? 'to' : 'from'} favorites!`);
+    },
+    [showSnackbar],
+  );
 
   const memoizedMovies = useMemo(
     () =>
@@ -167,10 +161,10 @@ const Home = () => {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
-        onClose={handleSnackbarClose}
+        onClose={closeSnackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={closeSnackbar} severity="success" sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
