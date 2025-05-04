@@ -27,32 +27,31 @@ const Home = () => {
   const [rating, setRating] = useState('');
   const { page, setPage, handlePageChange } = usePagination();
 
-  const debouncedSearch = useMemo(
-    () =>
-      debounce(
-        async (
-          text: string,
-          currentPage: number,
-          filters: { releaseDate: string; rating: string },
-        ) => {
-          setLoading(true);
-          setError(null);
-          try {
-            const { results, total } = await searchMovies(text, currentPage, pageSize, filters);
-            const sanitizedResults = results.map(sanitizeMovie);
-            setMovies(sanitizedResults);
-            setTotalResults(total);
-          } catch (err) {
-            const errorMessage =
-              (err as Error).message || 'Failed to fetch movies. Please try again later.';
-            setError(errorMessage);
-          } finally {
-            setLoading(false);
-          }
-        },
-        600,
-      ),
-    [],
+  const debouncedSearch = useCallback(
+    debounce(
+      async (
+        text: string,
+        currentPage: number,
+        filters: { releaseDate: string; rating: string },
+      ) => {
+        setLoading(true);
+        setError(null);
+        try {
+          const { results, total } = await searchMovies(text, currentPage, pageSize, filters);
+          const sanitizedResults = results.map(sanitizeMovie);
+          setMovies(sanitizedResults);
+          setTotalResults(total);
+        } catch (err) {
+          const errorMessage =
+            (err as Error).message || 'Failed to fetch movies. Please try again later.';
+          setError(errorMessage);
+        } finally {
+          setLoading(false);
+        }
+      },
+      600,
+    ),
+    [setLoading, setError, setMovies, setTotalResults],
   );
 
   useEffect(() => {
