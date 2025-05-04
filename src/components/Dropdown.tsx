@@ -27,4 +27,4 @@ const Dropdown: React.FC<DropdownProps> = ({ label, value, options, onChange }) 
   );
 };
 
-export default Dropdown;
+export default React.memo(Dropdown);

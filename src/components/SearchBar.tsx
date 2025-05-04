@@ -29,4 +29,4 @@ const SearchBar: React.FC<Props> = ({ value, onChange, placeholder = 'Search Mov
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
