@@ -8,6 +8,7 @@ import { sanitizeMovie } from '../utils/sanitizing';
 import { Movie } from '../types/Movie';
 import { Box, CircularProgress, Typography, Alert, Pagination, Snackbar } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { usePagination } from '../hooks/usePagination';
 
 const pageSize = 12;
 
@@ -19,7 +20,6 @@ const Home = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string }>({
     open: false,
@@ -27,6 +27,7 @@ const Home = () => {
   });
   const [releaseDate, setReleaseDate] = useState('');
   const [rating, setRating] = useState('');
+  const { page, setPage, handlePageChange } = usePagination();
 
   const debouncedSearch = useMemo(
     () =>
@@ -155,7 +156,7 @@ const Home = () => {
           <Pagination
             count={Math.ceil(totalResults / pageSize)}
             page={page}
-            onChange={(_, value) => setPage(value)}
+            onChange={handlePageChange}
             color="primary"
           />
         </Box>
