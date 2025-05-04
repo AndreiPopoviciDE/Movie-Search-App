@@ -138,10 +138,12 @@ const Home = () => {
         </Alert>
       )}
 
-      {!loading && !error && movies.length === 0 && (
+      {!loading && !error && movies.length === 0 && query && (
         <Box mt={4} display="flex" justifyContent="center">
           <Typography>
-            No movies found {query && ` for ${query}`} {releaseDate && ` in ${releaseDate}`}
+            No movies found
+            {query && ` for ${query}`}
+            {releaseDate && ` in ${releaseDate}`}
             {rating && ` with a rating of ${rating}`}
           </Typography>
         </Box>
