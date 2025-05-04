@@ -1,28 +1,15 @@
-import axios from 'axios';
 import { Movie, FilterOptions } from '../types/Movie';
 import { parseDecade, parseRating } from '../utils/parseFn';
+import { apiRequest } from '../utils/apiUtils';
 
 const BASE_URL = 'https://ghibliapi.vercel.app/films';
 
 let cachedMovies: Movie[] | null = null;
 
-const fetchJson = async <T>(url: string): Promise<T> => {
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    const errorMessage = axios.isAxiosError(error)
-      ? error.response?.statusText || error.message
-      : 'Unknown error';
-    console.error('Fetch error:', error);
-    throw new Error(`Failed to fetch: ${errorMessage}`);
-  }
-};
-
 const getCachedMovies = async (): Promise<Movie[]> => {
   if (cachedMovies) return cachedMovies;
   try {
-    cachedMovies = await fetchJson<Movie[]>(BASE_URL);
+    cachedMovies = await apiRequest<Movie[]>(BASE_URL);
     return cachedMovies;
   } catch (error) {
     console.error('Error fetching cached movies:', error);
@@ -74,7 +61,7 @@ export const searchMovies = async (
 
 export const fetchMovieDetails = async (id: string): Promise<Movie> => {
   try {
-    return await fetchJson<Movie>(`${BASE_URL}/${id}`);
+    return await apiRequest<Movie>(`${BASE_URL}/${id}`);
   } catch (error) {
     console.error(`Error fetching movie details for ID: ${id}`, error);
     throw new Error('Failed to fetch movie details');
