@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
 import Dropdown from '../components/Dropdown';
+import { pageSize, releaseDateOptions, ratingOptions } from '../constants/movieConstants';
 import { usePagination } from '../hooks/usePagination';
 import { useSnackbar } from '../hooks/useSnackbar';
 import { searchMovies } from '../api/movieApi';
@@ -10,12 +11,6 @@ import { sanitizeMovie } from '../utils/sanitizing';
 import { Movie } from '../types/Movie';
 import { Box, CircularProgress, Typography, Alert, Pagination, Snackbar } from '@mui/material';
 import Grid from '@mui/material/Grid';
-
-
-const pageSize = 12;
-
-const releaseDateOptions = ['2020s', '2010s', '2000s', '1990s'];
-const ratingOptions = ['80+', '70-79', '60-69', '50-59', '40-49', '30-39', '20-29'];
 
 const Home = () => {
   const [query, setQuery] = useState('');
@@ -52,19 +47,18 @@ const Home = () => {
           setLoading(false);
         }
       },
-      600
+      600,
     );
 
     return () => {
       debouncedSearchRef.current?.cancel();
     };
-  }, []); 
+  }, []);
 
   const triggerSearch = useCallback(() => {
     debouncedSearchRef.current?.(query, page, { releaseDate, rating });
   }, [query, page, releaseDate, rating]);
 
- 
   useEffect(() => {
     handlePageChange({}, 1);
   }, [query, releaseDate, rating, handlePageChange]);
@@ -77,7 +71,7 @@ const Home = () => {
     (action: 'added' | 'removed') => {
       showSnackbar(`Movie ${action} ${action === 'added' ? 'to' : 'from'} favorites!`);
     },
-    [showSnackbar]
+    [showSnackbar],
   );
 
   const memoizedMovies = useMemo(
@@ -87,7 +81,7 @@ const Home = () => {
           <MovieCard movie={movie} onFavoriteAction={handleFavoriteAction} />
         </Grid>
       )),
-    [movies, handleFavoriteAction]
+    [movies, handleFavoriteAction],
   );
 
   if (!loading && error && movies.length === 0) {

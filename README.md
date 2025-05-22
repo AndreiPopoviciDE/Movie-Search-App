@@ -79,6 +79,8 @@ Movie Explorer is a web application that allows users to search, explore, and ma
 
 ---
 
+- **Error Handling**: The application uses an `ErrorBoundary` to gracefully handle unexpected errors and display fallback UI.
+
 ## 🔐 Security
 
 - **Sanitization** – Custom utilities sanitize API data to prevent XSS.
